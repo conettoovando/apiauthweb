@@ -8,6 +8,7 @@ export default function Verify(){
     const navigate = useNavigate();
     const token = searchParams.get("token")
     const user_id = searchParams.get("user_id")
+    console.log(token, user_id)
 
     useEffect(() => {
         if (!token) {
@@ -18,7 +19,7 @@ export default function Verify(){
         api.post("/users/verify-email", {token, user_id})
         .then(() => {
             setStatus("Cuenta verificada correctamente. Redirigiendo a la ruta protegida")
-            setTimeout(() => navigate("/dashboard"), 3000);
+            setTimeout(() => navigate("/dashboard"), 1000);
         })
         .catch(() => {
             setStatus("Token invalido o expirado")

@@ -30,7 +30,7 @@ export default function Login() {
     try {
       if (mode === "register") {
         // Frontend que recibirá el token por query (?token=&user_id=)
-        const redirectUrl = `${window.location.origin}${import.meta.env.BASE_URL}verify`;
+        const redirectUrl = `${window.location.origin}${import.meta.env.BASE_URL}#/verify`;
         await api.post("/auth/register", {email: dataform.email, password: dataform.password, redirect_url: redirectUrl });
         setMessage("✔ Revisa tu correo para verificar la cuenta.");
       } else {
