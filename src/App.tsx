@@ -6,7 +6,7 @@ import Verify from './pages/verify'
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/apiauthweb'>
       <Routes>
         <Route path="/" element={<Login />}/>
         <Route path="/verify" element={<Verify />}/>
