@@ -1,7 +1,7 @@
 import { HashRouter as Router, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
 import ProtectedRoute from './components/ProtectedRoute'
-import MeUser from './pages/MeUser'
+import MeUser from './pages/Dashboard'
 import Verify from './pages/verify'
 
 function App() {

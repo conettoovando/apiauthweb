@@ -1,29 +1,23 @@
 import { Navigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { userAuthStore } from "../hooks/useAuthStore";
 
 type Props = {
     children: React.ReactNode
 }
 
 const ProtectedRoute = ({ children }: Props) => {
-    const token = localStorage.getItem("access_token")
+    const user = userAuthStore((state) => state.user);
 
-    if (!token) {
+    if (!user) {
         return <Navigate to={"/"} replace />
     }
 
-    try {
-        const { exp } = jwtDecode(token)
-        if (Date.now() >= exp! * 1000){
-            localStorage.removeItem("access_token")
-            return <Navigate to={"/"} replace />
-        }
-    } catch (error) {
-        localStorage.removeItem("access_token");
-        return <Navigate to={"/"} replace />;
+    if (Date.now() >= user.exp * 1000) {
+        userAuthStore.getState().logout();
+        return <Navigate to={"/"} replace />
     }
 
-    return children
+    return <>{children}</>
 }
 
 export default ProtectedRoute
