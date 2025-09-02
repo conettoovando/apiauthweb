@@ -60,3 +60,9 @@ api.interceptors.response.use(
 );
 
 export default api;
+
+export interface AuthResponse {
+    access_token: string;
+    refresh_token?: string;
+    token_type: "bearer";
+}
