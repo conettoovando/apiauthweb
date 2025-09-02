@@ -7,7 +7,7 @@ import {
 } from "@headlessui/react";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import React from "react";
-import { api } from "../api/client";
+import api from "../api/client";
 import { userAuthStore } from "../hooks/useAuthStore";
 
 type Props = {

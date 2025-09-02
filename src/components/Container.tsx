@@ -7,7 +7,7 @@ type Props = {
 
 export default function Container({children, className}: Props){
     return (
-        <div className={"max-w-screen-xl flex-col mx-auto p-4 bg-red-500 w-full " + className}>
+        <div className={"max-w-screen-xl flex-col mx-auto p-4 w-full " + className}>
             {children}
         </div>
     )

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { api, type AuthResponse } from "../api/client";
+import api, {type AuthResponse } from "../api/client";
 import { userAuthStore } from "../hooks/useAuthStore";
 
 type Mode = "login" | "register";

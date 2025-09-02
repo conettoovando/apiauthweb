@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
-import { api } from "../api/client"
+import api from "../api/client"
 
 export default function Verify(){
     const [status, setStatus] = useState("Verificando...")
