@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import api, {type AuthResponse } from "../api/client";
+import api, { type AuthResponse } from "../api/client";
 import { userAuthStore } from "../hooks/useAuthStore";
 
 type Mode = "login" | "register";
@@ -27,13 +27,12 @@ export default function Login() {
   const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
 
-  const setAccessToken = userAuthStore((state) => state.setAccessToken)
-  const user = userAuthStore((state) => state.user)
-
+  const setAccessToken = userAuthStore((state) => state.setAccessToken);
+  const user = userAuthStore((state) => state.user);
 
   useEffect(() => {
-    if (user) navigate("/dashboard")
-  }, [user, navigate])
+    if (user) navigate("/dashboard");
+  }, [user, navigate]);
 
   const onSubmit = async (dataform: FormData) => {
     setMessage("");
@@ -50,14 +49,12 @@ export default function Login() {
           redirect_url: redirectUrl,
         });
         setMessage("✔ Revisa tu correo para verificar la cuenta.");
-
       } else {
-        
         const { data } = await api.post<AuthResponse>("/auth/login", {
           email: dataform.email,
           password: dataform.password,
         });
-        
+
         setAccessToken(data.access_token);
 
         setMessage("✔ Sesión iniciada. Access token recibido.");
@@ -73,7 +70,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white p-6 rounded-xl shadow w-full max-w-md"
@@ -136,6 +133,13 @@ export default function Login() {
 
         {message && <div className="mt-4 text-sm text-center">{message}</div>}
       </form>
+      <div className="mt-5 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 max-w-150">
+        Las peticiones a la API puede tardarse unos minutos debido a las condiciones del servicio gratuito
+        de{" "}
+        <a href="https://render.com/pricing" target="_blank" className="underline hover:text-yellow-400">
+          render
+        </a>.
+      </div>
     </div>
   );
 }
