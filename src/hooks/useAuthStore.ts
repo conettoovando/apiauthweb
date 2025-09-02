@@ -43,9 +43,11 @@ export const userAuthStore = create<AuthState>()(
           const newToken = data.access_token;
           const decoded = jwtDecode<TokenPayload>(newToken);
           set({ accessToken: newToken, user: decoded });
+          return newToken;
         } catch (error) {
           console.error("Error refreshing token", error);
           set({ accessToken: null, user: null });
+          return null;
         }
       },
 

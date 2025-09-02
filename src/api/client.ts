@@ -32,32 +32,28 @@ api.interceptors.response.use(
   (res) => res,
   async (error) => {
     const originalRequest = error.config;
-    const status = error?.response?.status;
 
-    // Si la request era /auth/refresh -> no reintentar refresh (ya falló)
     if (originalRequest?.url?.includes("/auth/refresh")) {
       userAuthStore.getState().logout();
       return Promise.reject(error);
     }
 
-    if ((status === 401 || status === 403) && !originalRequest._retry) {
+    if ((error.response?.status === 401 || error.response?.status === 403) && !originalRequest._retry) {
       originalRequest._retry = true;
-      try {
-        const { data } = await refreshClient.post("/auth/refresh", {}, { withCredentials: true });
-        userAuthStore.getState().setAccessToken(data.access_token);
-        originalRequest.headers = {
-          ...originalRequest.headers,
-          Authorization: `Bearer ${data.access_token}`,
-        };
+
+      const newToken = await userAuthStore.getState().refreshAccessToken();
+      if (newToken!) {
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return api(originalRequest);
-      } catch (e) {
-        userAuthStore.getState().logout();
-        return Promise.reject(e);
+      } else {
+        return Promise.reject(error);
       }
     }
+
     return Promise.reject(error);
   }
 );
+
 
 export default api;
 
